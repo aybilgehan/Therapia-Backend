@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head>
+        <title>Twitchify - Real Time Twitch Alert</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link rel="shortcut icon" href="images/favicon-black.jpg">    
+        <link href='https://fonts.googleapis.com/css?family=Rubik:400,700,700i' rel='stylesheet' type='text/css'>		
+        <link rel="stylesheet" type="text/css"  href='style.css'>     
+    </head>
+
+    <body class="page-template-onepage">
+
+        <div class="site-wrapper">   
+
+            <div class="doc-loader">
+                <img src="images/preloader.svg" alt="Twitchify">
+            </div>       
+
+            <header class="header-holder">             
+                <div class="menu-wrapper center-relative relative">             
+                    <div class="header-logo">
+                        <a href="/">
+                            <img src="images/logo.jpg" alt="Twitchify">
+                        </a>               
+                    </div>
+
+                    <div class="toggle-holder">
+                        <div id="toggle">
+                            <div class="first-menu-line"></div>
+                            <div class="second-menu-line"></div>
+                            <div class="third-menu-line"></div>
+                        </div>
+                    </div>
+
+                    <div class="menu-holder">
+                        <nav id="header-main-menu">
+                            <ul class="main-menu sm sm-clean">
+                                <li>
+                                    <a href="#home">Home</a>
+                                </li>
+                                <li>
+                                    <a href="#usage">How To Use</a>
+                                </li>
+
+                                <li>
+                                    <a href="#contact">Contact</a>
+                                </li>
+                                {%if user%}
+                                <li>
+                                    <a href="/dashboard">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="/logout">Logout</a>
+                                </li>
+                                {%else%}
+                                <li>
+                                    <a href="/login">Login</a>
+                                </li>
+                                <li>
+                                    <a href="/register">Register</a>
+                                </li>
+                                {%endif%}
+                            </ul>
+                        </nav>                       
+                    </div>
+                    <div class="clear"></div>   
+                </div>
+            </header>                  
+
+            <div id="content" class="site-content center-relative">        
+
+                <!-- Home Section -->
+                <div id="home" class="section no-page-title">                   
+                    <div class="section-wrapper block content-1170 center-relative">                                                
+                        <div class="content-wrapper"> 
+                            {%if user%}
+                            <h1 class="big-text">
+                                Welcome <br>
+                                {{user}}
+                            </h1>         
+                            {%else%}                 
+                            <h1 class="big-text">
+                                Twitch <br>                               
+                                & Live Alert
+                            </h1>
+                            {%endif%}
+                        </div>                        
+                    </div>
+                </div> 
+
+                <!-- Services Section -->
+                <div id="usage" class="section">                   
+                    <div class="page-title-holder">
+                        <h3 class="entry-title">
+                            How To Use             
+                        </h3>
+                    </div>
+                    <div class="section-wrapper block content-1170 center-relative">                                                       
+                        <div class="content-wrapper">
+
+                            <div class="one_third ">
+                                <div class="service-holder">
+                                    <p class="service-num">1</p>
+                                    <div class="service-txt">
+                                        <h4>Twitch</h4>
+                                        <p>
+                                            Connect your Twitch account to Twitchify.
+                                        </p>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="one_third ">
+                                <div class="service-holder">
+                                    <p class="service-num">2</p>
+                                    <div class="service-txt">
+                                        <h4>Twitchify</h4>
+                                        <p>
+                                            Customize your alerts and get your unique URL.
+                                        </p>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="one_third last">
+                                <div class="service-holder">
+                                    <p class="service-num">3</p>
+                                    <div class="service-txt">
+                                        <h4>Stream</h4>
+                                        <p>
+                                            Add your unique URL to your streaming software.
+                                        </p>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>    
+                            <div class="clear"></div>
+                        </div>                
+                    </div>
+                </div>
+
+               
+                <!-- Contact Section -->
+                <div id="contact" class="section">                   
+                    <div class="page-title-holder">
+                        <h3 class="entry-title">
+                            CONTACT             
+                        </h3>
+                    </div>
+                    <div class="section-wrapper block content-1170 center-relative">                                                
+                        <div class="content-wrapper">
+                            <div class="one_half ">
+                                <p class="title-description-up">CONTACT US</p>
+                                <h2 class="entry-title medium-text">
+                                    Lets start <br>
+                                    Working
+                                </h2>
+                                <p>
+                                    Because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept one we are.
+                                </p>
+                                <br>
+                                <div class="social">
+                                    <a href="#" target="_blank">
+                                        <span class="fa fa-facebook"></span>
+                                    </a>
+                                </div>
+                                <div class="social">
+                                    <a href="#" target="_blank">
+                                        <span class="fa fa-twitter"></span>
+                                    </a>
+                                </div>
+                                <div class="social">
+                                    <a href="#" target="_blank">
+                                        <span class="fa fa-instagram"></span>
+                                    </a>
+                                </div>
+                                <div class="social">
+                                    <a href="#" target="_blank">
+                                        <span class="fa fa-vimeo"></span>
+                                    </a>
+                                </div>
+                                <div class="social">
+                                    <a href="#" target="_blank">
+                                        <span class="fa fa-behance"></span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="one_half last ">
+                                <div class="contact-form">
+                                    <p>
+                                        <input id="name" type="text" name="your-name" placeholder="Name">
+                                    </p>
+                                    <p>
+                                        <input id="contact-email" type="email" name="your-email" placeholder="Email">
+                                    </p>                                    
+                                    <p>
+                                        <input id="subject" type="text" name="your-subject" placeholder="Subject">
+                                    </p>
+                                    <p>
+                                        <textarea id="message" name="your-message" placeholder="Message"></textarea>
+                                    </p>
+                                    <p class="contact-submit-holder">
+                                        <input type="submit" value="SEND">
+                                    </p>  
+                                </div>
+                            </div>                            
+                            <div class="clear"></div>
+
+                        
+                        </div>                        
+                    </div>
+                </div> 
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content center-relative">
+                    <div class="footer-logo">
+                        <img src="images/favicon-black.jpg" alt="Twitchify" />
+                    </div>        
+                    <div class="footer-logo-divider"></div>
+                    <div class="footer-mail">            
+                        <a href="mailto:help@twitchify.com">help@twitchify.com</a>
+                    </div>
+                    <div class="footer-social-divider"></div>
+                    <div class="social-holder">
+                        <a href="#">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                        <a href="#">
+                            <span class="fa fa-facebook"></span>
+                        </a>
+                        <a href="#">
+                            <span class="fa fa-behance"></span>
+                        </a>
+                        <a href="#">
+                            <span class="fa fa-dribbble"></span>
+                        </a>
+                    </div>
+
+                    <div class="copyright-holder">
+                        © 2023 Twitchify            
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!--Load JavaScript-->
+        <script src="js/jquery.js"></script>			                                       
+        <script src="js/jquery.sticky.js"></script>			                                       
+        <script src="js/tipper.js"></script>			                                       
+        <script src="js/jarallax.js"></script>			                                       
+        <script src="js/jarallax-element.min.js"></script>			                                       
+        <script src='js/imagesloaded.pkgd.js'></script>                
+        <script src='js/jquery.fitvids.js'></script>                
+        <script src='js/jquery.smartmenus.min.js'></script>                                 
+        <script src='js/isotope.pkgd.js'></script>                                                 
+        <script src='js/owl.carousel.min.js'></script>                          
+        <script src='js/jquery.sticky-kit.min.js'></script>                          
+        <script src='js/main.js'></script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    h1 {
+      color: #ff0000;
+    }
+    p {
+      color: #333;
+    }
+  </style>
+  <script>
+    // Redirect to the specified URL after a delay
+    setTimeout(function() {
+      window.location.href = "{{ redirect }}";
+    }, 5000); // Adjust the delay (in milliseconds) as needed
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1>Error</h1>
+  </header>
+
+  <main>
+    <p>An error occurred: {{ error }}</p>
+    <p>Redirecting to {{ redirect }}...</p>
+  </main>
+
+</body>
+</html>
