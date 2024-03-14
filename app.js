@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const session = require("cookie-session");
+const cors = require('cors');
 require('dotenv').config();
 
 
 // Import routes
-const pageRouter = require('./routes/page.router');
+const pageRouter = require('./routes/page.router.js');
 
 
 console.log("App is running in '" + process.env['NODE_ENV'] + "' mode.")
@@ -21,7 +22,8 @@ console.log("URL is >>> " + app.locals.appUrl);
 
 
 // Middlewares
-app.use(express.static(__dirname + '/views/'));
+//app.use(express.static(__dirname + '/views/'));
+
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -33,9 +35,10 @@ app.use(session({
     cookie: { secure: false }
 }))
 
+app.use(cors());
 
 // Set view engine
-app.set('view engine', 'twig');
+// app.set('view engine', 'twig');
 
 // Routes
 app.use("/", pageRouter);
