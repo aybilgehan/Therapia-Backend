@@ -1,4 +1,3 @@
-const axios = require('axios');
 require('dotenv').config();
 const Users = require('../db.handler/user.model');
 const Articles = require('../db.handler/article.model');
