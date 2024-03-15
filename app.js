@@ -7,6 +7,7 @@ require('dotenv').config();
 
 // Import routes
 const pageRouter = require('./routes/page.router.js');
+const adminRouter = require('./routes/admin.router.js');
 
 
 console.log("App is running in '" + process.env['NODE_ENV'] + "' mode.")
@@ -42,6 +43,7 @@ app.use(cors());
 
 // Routes
 app.use("/", pageRouter);
+app.use("/admin", adminRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));

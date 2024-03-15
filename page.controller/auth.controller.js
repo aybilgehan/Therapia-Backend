@@ -94,9 +94,12 @@ exports.signin = async (req, res) => {
                     expiresIn: 86400,
                 });
             req.session.token = token;
+            req.session.userId = user._id;
+            req.session.role = user.role;
             res.status(200).send({
                 user: user.information ? user.information : user.email,
-                role: user.role
+                role: user.role,
+                token: token
             });
             return;
         }
@@ -108,7 +111,7 @@ exports.signin = async (req, res) => {
 
 exports.logout = async (req, res) => {
     try {
-        req.session.token = null;
+        req.session = null;
         res.status(200).send({ message: "Logged out" });
         return;
     } catch (error) {
