@@ -12,8 +12,5 @@ router.post("/api/auth/signup", mw.checkUserNotLoggedIn, authController.signup);
 router.post("/api/auth/logout", mw.checkUserLoggedIn, authController.logout);
 router.get("/api/auth/verify/:code", mw.checkUserNotLoggedIn, authController.verify);
 
-/* - TEST ISLEMLERI - */
-
-router.post("/testArticle",pageController.testArticle)
 
 module.exports = router;

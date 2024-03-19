@@ -23,4 +23,7 @@ const upload = multer({
 
 router.post("/api/upload", mw.checkUserLoggedIn, mw.checkIsMHP ,upload.single('file'), mhpController.uploadArticle);
 
+router.post("/api/testUpload",  upload.single('file'), mhpController.testUpload);
+
+
 module.exports = router;  
