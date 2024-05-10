@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 
 const analyzeSchema = new Schema({
+    resultId: {
+        type: Schema.Types.UUID,
+        required: true
+    },
+
     text: {
         type: String,
         required: true
@@ -23,11 +28,15 @@ const analyzeSchema = new Schema({
         required: true
     },
 
+    evaluationPermission: {
+        type: Boolean,
+        default: false
+    },
+
     evaluation: {
         type: Array,
         default: []
     }
-
 });
 
 const analyzeModel = mongoose.model("Analyze", analyzeSchema);

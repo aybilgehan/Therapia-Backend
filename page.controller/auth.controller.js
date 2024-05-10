@@ -97,16 +97,18 @@ exports.signin = async (req, res) => {
             req.session.userId = user._id;
             req.session.role = user.role;
             res.status(200).send({
-                user: user.information ? user.information : user.email,
-                role: user.role,
-                token: token
-            });
-            return;
-        }
-    } catch (error) {
-        res.status(500).send({ message: error });
+                data: {
+                    user: user.information ? user.information : user.email,
+                    role: user.role,
+                    token: token
+                },
+                message: "Success"});
         return;
     }
+    } catch (error) {
+    res.status(500).send({ data: {}, message: error });
+    return;
+}
 };
 
 exports.logout = async (req, res) => {

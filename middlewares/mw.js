@@ -37,6 +37,15 @@ exports.checkIsMHP = async (req, res, next) => {
     }
 }
 
+exports.checkIsUser = async (req, res, next) => {
+    if (req.session.role == "user") {
+        next();
+    } else {
+        res.status(401).send({ message: "Unauthorized" });
+        return;
+    }
+}
+
 exports.verifyJWT = async (req, res, next) => {
     try {
         const token = req.header('Authorization');

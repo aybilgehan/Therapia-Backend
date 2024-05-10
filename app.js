@@ -9,7 +9,8 @@ require('dotenv').config();
 const pageRouter = require('./routes/page.router.js');
 const adminRouter = require('./routes/admin.router.js');
 const mhpRouter = require('./routes/mhp.router.js');
-
+const analyzeRouter = require('./routes/analyze.router.js');
+const userRouter = require('./routes/user.router.js');
 
 console.log("App is running in '" + process.env['NODE_ENV'] + "' mode.")
 if (process.env['NODE_ENV'] == "test") {
@@ -46,6 +47,8 @@ app.use(cors());
 app.use("/", pageRouter);
 app.use("/admin", adminRouter);
 app.use("/mhp", mhpRouter);
+app.use("/analyze", analyzeRouter);
+app.use("/user", userRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));

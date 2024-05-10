@@ -1,8 +1,7 @@
 require('dotenv').config();
 const Users = require('../db.handler/user.model');
 const Articles = require('../db.handler/article.model');
-const Applications = require('../db.handler/application.model');
-const Analyzes = require('../db.handler/analyze.model');
+
 
 
 /* --------------------- WEBSITESI ISLEMLERI ---------------------*/
@@ -80,6 +79,21 @@ exports.getLogoutPage = async (req, res, next) => {
         console.log(error);
     }
 };
+
+// Get Articles by pagination
+exports.getArticles = async (req, res, next) => {
+    const page = parseInt(req.params.page) || 1;
+    const limit = parseInt(req.params.limit) || 10;
+
+    const startIndex = (page - 1) * limit;
+
+    try {
+        results = await Articles.find().sort({ createdAt: -1 }).limit(limit).skip(startIndex).exec();
+        res.json(results);
+    } catch (error) {
+        res.send(error);
+    }
+}
 
 
 

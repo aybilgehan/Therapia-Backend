@@ -21,6 +21,8 @@ const upload = multer({
     }
 });
 
+router.get("/api/results/evaluation", mw.checkUserLoggedIn, mw.checkIsMHP, mhpController.getEvaluationResults);
+router.post("/api/results/evaluation", mw.checkUserLoggedIn, mw.checkIsMHP, mhpController.evaluateResult);
 router.post("/api/upload", mw.checkUserLoggedIn, mw.checkIsMHP ,upload.single('file'), mhpController.uploadArticle);
 
 router.post("/api/testUpload",  upload.single('file'), mhpController.testUpload);

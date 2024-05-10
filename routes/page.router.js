@@ -13,4 +13,7 @@ router.post("/api/auth/logout", mw.checkUserLoggedIn, authController.logout);
 router.get("/api/auth/verify/:code", mw.checkUserNotLoggedIn, authController.verify);
 
 
+/* - PAGE ISLEMLERI - */
+router.get("/api/articles", pageController.getArticles);
+
 module.exports = router;

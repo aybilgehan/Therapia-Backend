@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Article = require('../db.handler/article.model');
+const Analyze = require('../db.handler/analyze.model');
 const uuid = require('uuid');
 const AWS = require('aws-sdk');
 const fs = require('fs');
@@ -11,6 +12,24 @@ const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY,
     secretAccessKey: process.env.AWS_SECRET_KEY
 });
+
+exports.getEvaluationResults = async (req, res) => {
+    try {
+        let results = await Analyze.find({ evaluationPermission: true, evaluation: { $not : { $elemMatch: { mhpId: req.session.userId } } } });
+        res.status(200).send({ data: results });
+    } catch (error) {
+        res.status(500).send({ message: error });
+    }
+}
+
+exports.evaluateResult = async (req, res) => {
+    try {
+        await Analyze.findOneAndUpdate({ resultId: req.body.resultID }, { $push: { evaluation: { mhpId: req.session.userId, evaluation: req.body.evaluation } } });
+        res.status(200).send({ message: "Result evaluated" });
+    } catch (error) {
+        res.status(500).send({ message: error });
+    }
+}
 
 exports.uploadArticle = async (req, res) => {
     const file = req.file;
