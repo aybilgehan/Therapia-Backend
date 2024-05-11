@@ -22,6 +22,7 @@ exports.verify = async (req, res) => {
                 temp_users.splice(index, 1);
             }
             await Users.create({
+                _id: uuid.v4(),
                 email: user.email,
                 password: user.password
             });
@@ -32,6 +33,7 @@ exports.verify = async (req, res) => {
             return;
         }
     } catch (error) {
+        console.log(error)
         res.status(500).send({ message: error });
         return;
     }
@@ -81,7 +83,8 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
     try {
         let user = await Users.findOne({ "email": req.body.email });
-        if (!user || user.password != req.body.password) {
+        if (!user) { res.status(401).send({ message: "User not found" }); return; }
+        if (user.password != req.body.password) {
             res.status(401).send({ message: "Invalid username or password" });
             return;
         } else {

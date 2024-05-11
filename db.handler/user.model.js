@@ -5,8 +5,7 @@ const uuid = require('uuid');
 
 const userSchema = new Schema({
     _id: {
-        type: Schema.Types.UUID,
-        default: uuid.v4
+        type: Schema.Types.UUID
     },
 
     email: {
