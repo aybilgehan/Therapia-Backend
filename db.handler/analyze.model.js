@@ -3,9 +3,8 @@ const Schema = mongoose.Schema;
 
 
 const analyzeSchema = new Schema({
-    resultId: {
-        type: Schema.Types.UUID,
-        required: true
+    _id: {
+        type: Schema.Types.UUID
     },
 
     text: {
@@ -15,7 +14,6 @@ const analyzeSchema = new Schema({
 
     ownerId: {
         type: Schema.Types.UUID,
-        required: true
     },
 
     date: {

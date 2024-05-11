@@ -116,6 +116,7 @@ exports.signin = async (req, res) => {
 
 exports.logout = async (req, res) => {
     try {
+        // TODO jtw token ile logout eklenecek 
         req.session = null;
         res.status(200).send({ message: "Logged out" });
         return;
