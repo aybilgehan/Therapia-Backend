@@ -96,7 +96,6 @@ exports.signin = async (req, res) => {
                     allowInsecureKeySizes: true,
                     expiresIn: 86400,
                 });
-            req.session.token = token;
             req.session.userId = user._id;
             req.session.role = user.role;
             res.status(200).send({

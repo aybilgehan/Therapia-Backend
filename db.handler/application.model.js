@@ -18,7 +18,8 @@ const applicationSchema = new Schema({
     },
 
     approved: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 
 });

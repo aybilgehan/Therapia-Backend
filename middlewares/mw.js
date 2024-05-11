@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+
 exports.checkUserLoggedIn = async (req, res, next) => {
     if (req.session.token) {
         next();

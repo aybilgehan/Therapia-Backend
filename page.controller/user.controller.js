@@ -1,5 +1,7 @@
 const User = require('../db.handler/user.model');
 const Analyze = require('../db.handler/analyze.model');
+const Application = require('../db.handler/application.model');
+
 
 exports.updateInformation = async (req, res) => {
     try {
@@ -23,3 +25,9 @@ exports.getResults = async (req, res) => {
         res.status(500).send({ message: error });
     }
 }
+
+/* exports.apply = async (req, res) => {
+    try {
+        if () 
+    }
+} */

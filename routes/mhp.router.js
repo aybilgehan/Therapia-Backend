@@ -21,9 +21,10 @@ const upload = multer({
     }
 });
 
-router.get("/api/results/evaluation", mw.checkUserLoggedIn, mw.checkIsMHP, mhpController.getEvaluationResults);
-router.post("/api/results/evaluation", mw.checkUserLoggedIn, mw.checkIsMHP, mhpController.evaluateResult);
-router.post("/api/upload", mw.checkUserLoggedIn, mw.checkIsMHP ,upload.single('file'), mhpController.uploadArticle);
+router.get("/api/results/evaluation", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsMHP, mhpController.getEvaluationResults);
+router.post("/api/results/evaluation", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsMHP, mhpController.evaluateResult);
+router.post("/api/upload", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsMHP ,upload.single('file'), mhpController.uploadArticle);
+// Application for the mhp role
 
 router.post("/api/testUpload",  upload.single('file'), mhpController.testUpload);
 
