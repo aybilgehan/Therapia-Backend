@@ -12,7 +12,7 @@ exports.checkUserLoggedIn = async (req, res, next) => {
 }
 
 exports.checkUserNotLoggedIn = async (req, res, next) => {
-    if (req.session.token) {
+    if (!req.session.token) {
         res.status(401).send({ message: "Unauthorized" });
         return;
     } else {
@@ -54,9 +54,10 @@ exports.verifyJWT = async (req, res, next) => {
             res.status(401).send({ message: "Unauthorized" });
             return;
         }
-
+        req.session.token = token;
         const verified = jwt.verify(token, process.env.JWT_SECRET);
         req.session.userId = verified.userId;
+        req.session.role = verified.role;
         next();
     } catch (error) {
         res.status(401).send({ message: "Unauthorized" });

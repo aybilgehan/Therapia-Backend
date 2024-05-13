@@ -22,6 +22,7 @@ const upload = multer({
 });
 
 router.get("/api/results", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsUser, userController.getResults) // Get Results
+router.get("/api/testresult", mw.verifyJWT, userController.getResults)
 router.put("/api/information", mw.verifyJWT, mw.checkUserLoggedIn, userController.updateInformation) // Information Update
 //router.post("/api/apply", mw.checkUserLoggedIn, mw.checkIsUser, upload.a ,userController.apply);
 

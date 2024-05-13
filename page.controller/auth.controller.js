@@ -89,28 +89,30 @@ exports.signin = async (req, res) => {
             return;
         } else {
             const token = await jwt.sign(
-                { userId: user._id },
+                {
+                    userId: user._id,
+                    role: user.role
+                },
                 process.env.JWT_SECRET,
                 {
                     algorithm: "HS256",
                     allowInsecureKeySizes: true,
                     expiresIn: 86400,
                 });
-            req.session.userId = user._id;
-            req.session.role = user.role;
             res.status(200).send({
                 data: {
                     user: user.information ? user.information : user.email,
                     role: user.role,
                     token: token
                 },
-                message: "Success"});
+                message: "Success"
+            });
+            return;
+        }
+    } catch (error) {
+        res.status(500).send({ data: {}, message: error });
         return;
     }
-    } catch (error) {
-    res.status(500).send({ data: {}, message: error });
-    return;
-}
 };
 
 exports.logout = async (req, res) => {

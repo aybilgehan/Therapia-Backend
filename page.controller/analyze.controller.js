@@ -5,7 +5,6 @@ const uuid = require('uuid');
 
 
 exports.analyze = async (req, res) => {
-    console.log("geldi")
     try {
         Request.post({
             url : process.env.ANALYZE_URL,
@@ -22,7 +21,6 @@ exports.analyze = async (req, res) => {
                 res.send({error : "An error occured"});
             }
             body = JSON.parse(body);
-            console.log(req.session.userId ? req.session.userId : null)
             Analyze.create({
                 _id: uuid.v4(),
                 text: req.body.text,
