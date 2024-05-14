@@ -17,7 +17,7 @@ if (process.env['NODE_ENV'] == "test") {
   app.locals.appUrl = "http://localhost/";
 }
 else if (process.env['NODE_ENV'] == "production") {
-  app.locals.appUrl = "https://twitchify.onrender.com/";
+  app.locals.appUrl = "https://therapia.onrender.com";
 } else {
   console.log("anlamadım hocam");
 }
@@ -43,6 +43,24 @@ app.use(cors());
 // Set view engine
 //app.set('view engine', 'twig');
 
+app.use(function (req, res, next) {
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
+});
 // Routes
 app.use("/", pageRouter);
 app.use("/admin", adminRouter);
@@ -51,17 +69,17 @@ app.use("/analyze", analyzeRouter);
 app.use("/user", userRouter);
 
 app.use(function (req, res, next) {
-    next(createError(404));
+  next(createError(404));
 });
 
 app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
-    // render the error page
-    res.status(err.status || 500);
-  });
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+});
 
 
 
