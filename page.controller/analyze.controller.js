@@ -27,11 +27,19 @@ exports.analyze = async (req, res) => {
                 ownerId: req.session.userId ? req.session.userId : null,
                 result: body.result
             });
-            res.send(body);
+            res.send({
+                data: body,
+                message: "Text analyzed",
+                success: true
+            });
         });
     } catch (error) {
         console.log(error);
-        res.send({error : "An error occured"});
+        res.send({
+            data: null,
+            error : "An error occured",
+            success: false
+        });
     }
 }
 

@@ -26,15 +26,27 @@ exports.verify = async (req, res) => {
                 email: user.email,
                 password: user.password
             });
-            res.status(200).send({ message: "User created" });
+            res.status(200).send({ 
+                data: null,
+                message: "User created",
+                success: true
+            });
             return;
         } else {
-            res.status(400).send({ message: "Invalid Verification" });
+            res.status(400).send({
+                data: null,
+                message: "Invalid Verification",
+                success: false
+            });
             return;
         }
     } catch (error) {
         console.log(error)
-        res.status(500).send({ message: error });
+        res.status(500).send({ 
+            data: null,
+            message: "An error occured",
+            success: false    
+        });
         return;
     }
 }
@@ -45,12 +57,20 @@ exports.signup = async (req, res) => {
         let checkEmail = await Users.findOne({ "email": req.body.email })
 
         if (temp_users.find(u => u.email === req.body.email)) {
-            res.status(400).send({ message: "Verification email already sent" });
+            res.status(400).send({ 
+                data: null,
+                message: "Verification email already sent",
+                success: true
+            });
             return;
         }
 
         if (checkEmail) {
-            res.status(400).send({ message: "Email already exists" });
+            res.status(400).send({ 
+                data: null,
+                message: "Email already exists",
+                success: false
+            });
             return;
         } else {
             let code = uuid.v4();
@@ -61,7 +81,12 @@ exports.signup = async (req, res) => {
                 text: `Please click the link to verify your account: ${process.env.APP_URL}/api/auth/verify/${code}`
             }, (error, info) => {
                 if (error) {
-                    res.status(500).send({ message: error });
+                    console.log(error)
+                    res.status(500).send({
+                        data: null,
+                        message: "An error occured",
+                        success: false
+                    });
                 } else {
                     temp_users.push({
                         email: req.body.email,
@@ -69,13 +94,22 @@ exports.signup = async (req, res) => {
                         code: code,
                         date: Date.now()
                     });
-                    res.status(200).send({ message: "Verification email sent" });
+                    res.status(200).send({
+                        data: null,
+                        message: "Verification email sent",
+                        success: true
+                    });
                 }
             });
             return;
         }
     } catch (error) {
-        res.status(500).send({ message: error });
+        console.log(error)
+        res.status(500).send({
+            data: null,
+            message: "An error occured",
+            success: false
+        });
         return;
     }
 };
@@ -83,9 +117,9 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
     try {
         let user = await Users.findOne({ "email": req.body.email });
-        if (!user) { res.status(401).send({ message: "User not found" }); return; }
+        if (!user) { res.status(401).send({ data: null, message: "User not found", success: false }); return; }
         if (user.password != req.body.password) {
-            res.status(401).send({ message: "Invalid username or password" });
+            res.status(401).send({data: null, message: "Invalid username or password", success: false});
             return;
         } else {
             const token = await jwt.sign(
@@ -105,24 +139,38 @@ exports.signin = async (req, res) => {
                     role: user.role,
                     token: token
                 },
-                message: "Success"
+                message: "User logged in",
+                success: true
             });
             return;
         }
     } catch (error) {
-        res.status(500).send({ data: {}, message: error });
+        res.status(500).send({ 
+            data: null, 
+            message: "An error occured",
+            success: false 
+        });
         return;
     }
 };
 
 exports.logout = async (req, res) => {
     try {
-        // TODO jtw token ile logout eklenecek 
+        // make token invalid
+    
         req.session = null;
-        res.status(200).send({ message: "Logged out" });
+        res.status(200).send({ 
+            data: null,
+            message: "Logged out",
+            success: true
+        });
         return;
     } catch (error) {
-        res.status(500).send({ message: error });
+        res.status(500).send({ 
+            data: null,
+            message: "An error occured",
+            success: false    
+        });
         return;
     }
 }

@@ -64,3 +64,8 @@ exports.verifyJWT = async (req, res, next) => {
         return;
     }
 }   
+
+exports.deneme = async (req, res, next) => {
+    console.log("deneme")
+    next();
+}

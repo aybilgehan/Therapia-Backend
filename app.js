@@ -18,7 +18,7 @@ if (process.env['NODE_ENV'] == "test") {
 }
 else if (process.env['NODE_ENV'] == "production") {
   app.locals.appUrl = "https://twitchify.onrender.com/";
-}else{
+} else {
   console.log("anlamadım hocam");
 }
 console.log("URL is >>> " + app.locals.appUrl);
@@ -29,19 +29,19 @@ console.log("URL is >>> " + app.locals.appUrl);
 
 app.use(express.json());
 app.use(express.urlencoded({
-    extended: true
+  extended: true
 }))
 app.use(session({
-    secret: 'keyboard cat',
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: false }
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false }
 }))
 
 app.use(cors());
 
 // Set view engine
-// app.set('view engine', 'twig');
+//app.set('view engine', 'twig');
 
 // Routes
 app.use("/", pageRouter);
@@ -61,7 +61,6 @@ app.use(function (err, req, res, next) {
   
     // render the error page
     res.status(err.status || 500);
-    res.render('login'); // error olarak değişecek
   });
 
 
