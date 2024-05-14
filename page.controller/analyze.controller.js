@@ -15,14 +15,14 @@ exports.analyze = async (req, res) => {
                 key: "fac5cc77-c065-4c1d-9878-c11acc5e9c30",
                 text : req.body.text
             })
-        }, (error, response, body) => {
+        }, async (error, response, body) => {
             if (error) {
                 console.log(error);
                 res.send({error : "An error occured"});
             }
             body = JSON.parse(body);
             let tempId = uuid.v4();
-            Analyze.create({
+            await Analyze.create({
                 _id: tempId,
                 text: req.body.text,
                 ownerId: req.session.userId ? req.session.userId : null,

@@ -80,13 +80,13 @@ exports.uploadArticle = async (req, res) => {
             await uploadFile(file[0]);
         }
 
-        Article.create({
+        await Article.create({
             writerId: req.session.userId,
             header: req.body.header,
             content: contentPath,
             image: imagePath
         });
-        
+
         res.status(200).json({ data: { content: contentPath, image: imagePath }, message: "Files uploaded", success: true });
     } catch (error) {
         console.log(error);
