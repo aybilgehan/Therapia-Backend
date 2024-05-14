@@ -3,6 +3,8 @@ const app = express();
 const session = require("cookie-session");
 const cors = require('cors');
 require('dotenv').config();
+const createError = require('http-errors');
+
 
 
 // Import routes
@@ -60,6 +62,7 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
+  console.log(err.message)
   res.status(err.status || 500).send({ message: err.message });
 });
 

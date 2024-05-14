@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-
 const userController = require("../page.controller/user.controller.js");
-const mhpController = require("../page.controller/mhp.controller.js");
 const mw = require("../middlewares/mw.js");
-
+const path = require("path");
 const multer = require("multer");
 
 const upload = multer({
@@ -28,7 +26,8 @@ router.put("/api/information", mw.verifyJWT, mw.checkUserLoggedIn, userControlle
 router.put("/api/result/permission/:id", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsUser, userController.updateEvaluationPermission) // Evaluation Update
 
 // Application for the user role and upload multiple files
-router.post("/api/apply", mw.verifyJWT, mw.checkUserLoggedIn, upload.any('files'), userController.apply);
+router.post("/api/apply", mw.verifyJWT, mw.checkUserLoggedIn, upload.array('file', 5), userController.applyProfessional);
+
 
 
 

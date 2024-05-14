@@ -35,3 +35,20 @@ exports.checkTextLength = async (req, res, next) => {
         res.send({error : "An error occured"});
     }
 }
+
+exports.verifyJWT = async (req, res, next) => {
+    try {
+        const token = req.header('Authorization');
+        if (!token) {
+            next();
+        }
+        req.session.token = token;
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        req.session.userId = verified.userId;
+        req.session.role = verified.role;
+        next();
+    } catch (error) {
+        res.status(401).send({ message: "Unauthorized" });
+        return;
+    }
+}   
