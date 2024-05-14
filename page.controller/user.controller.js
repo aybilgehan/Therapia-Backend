@@ -35,6 +35,21 @@ exports.getResults = async (req, res) => {
     }
 }
 
+exports.updateEvaluationPermission = async (req, res) => {
+    try {
+        // check evaluationPermission is not already true
+        await Analyze.findOneAndUpdate(
+            { _id: req.params['id'], evaluationPermission: false },
+            { evaluationPermission: true },
+            { new: true }
+        );
+        res.status(200).send({ data: null, message: "Evaluation permission granted", success: true });
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({ data: null, message: "An error occured", success: false });
+    }
+}
+
 exports.apply = async (req, res) => {
     try {
         if (await Application.findOne({ userId: req.session.userId })) {

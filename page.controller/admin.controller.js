@@ -3,7 +3,7 @@ const User = require('../db.handler/user.model');
 
 exports.getApplicants = async (req, res) => {
     try {
-        let applicants = await Application.find({ approved: { $exists: false } });
+        let applicants = await Application.find({});
         res.status(200).send({
             data: applicants,
             message: "Applicants fetched successfully",

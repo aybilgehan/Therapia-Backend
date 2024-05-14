@@ -25,6 +25,7 @@ const upload = multer({
 router.get("/api/results", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsUser, userController.getResults) // Get Results
 router.get("/api/testresult", mw.verifyJWT, userController.getResults)
 router.put("/api/information", mw.verifyJWT, mw.checkUserLoggedIn, userController.updateInformation) // Information Update
+router.put("/api/result/permission/:id", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsUser, userController.updateEvaluationPermission) // Evaluation Update
 
 // Application for the user role and upload multiple files
 router.post("/api/apply", mw.verifyJWT, mw.checkUserLoggedIn, upload.any('files'), userController.apply);

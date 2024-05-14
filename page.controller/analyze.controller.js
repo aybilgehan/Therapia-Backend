@@ -21,12 +21,14 @@ exports.analyze = async (req, res) => {
                 res.send({error : "An error occured"});
             }
             body = JSON.parse(body);
+            let tempId = uuid.v4();
             Analyze.create({
-                _id: uuid.v4(),
+                _id: tempId,
                 text: req.body.text,
                 ownerId: req.session.userId ? req.session.userId : null,
                 result: body.result
             });
+            body.resultId = tempId;
             res.send({
                 data: body,
                 message: "Text analyzed",
