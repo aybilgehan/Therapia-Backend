@@ -117,7 +117,7 @@ exports.updateInformation = async (req, res) => {
  */
 exports.getResults = async (req, res) => {
     try {
-        let results = await Analyze.findOne({ ownerId: req.session.userId });
+        let results = await Analyze.find({ ownerId: req.session.userId }) || [];
         res.status(200).send({ data: results, message: "Results fetched successfully", success: true });
     } catch (error) {
         res.status(500).send({ message: error, message: "An error occurred", success: false });
