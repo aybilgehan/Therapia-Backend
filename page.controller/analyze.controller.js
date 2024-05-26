@@ -65,7 +65,6 @@ const uuid = require('uuid');
  */
 
 exports.analyze = async (req, res) => {
-    console.log("geldi")
     try {
         Request.post({
             url : process.env.ANALYZE_URL,

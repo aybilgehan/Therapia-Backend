@@ -11,7 +11,6 @@ const analyzeSchema = new Schema({
         type: String,
         required: true
     },
-
     ownerId: {
         type: Schema.Types.UUID,
     },
