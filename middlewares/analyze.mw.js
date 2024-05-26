@@ -19,7 +19,7 @@ exports.checkAnalyzeCount = async (req, res, next) => {
             }
         }
     } catch (error) {
-        res.send({error : "An error occured"});
+        res.send({ error: "An error occured" });
     }
 }
 
@@ -32,7 +32,7 @@ exports.checkTextLength = async (req, res, next) => {
             res.status(400).send({ error: "Text length must be greater than 100 and less than 1000 characters" });
         }
     } catch (error) {
-        res.status(400).send({error : error});
+        res.status(400).send({ error: error });
     }
 }
 
@@ -41,12 +41,13 @@ exports.verifyJWT = async (req, res, next) => {
         const token = req.header('Authorization');
         if (!token) {
             next();
+        } else {
+            req.session.token = token;
+            const verified = jwt.verify(token, process.env.JWT_SECRET);
+            req.session.userId = verified.userId;
+            req.session.role = verified.role;
+            next();
         }
-        req.session.token = token;
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.session.userId = verified.userId;
-        req.session.role = verified.role;
-        next();
     } catch (error) {
         res.status(401).send({ message: error });
         return;

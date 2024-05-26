@@ -65,6 +65,7 @@ const uuid = require('uuid');
  */
 
 exports.analyze = async (req, res) => {
+    console.log("geldi")
     try {
         Request.post({
             url : process.env.ANALYZE_URL,
@@ -77,7 +78,6 @@ exports.analyze = async (req, res) => {
             })
         }, async (error, response, body) => {
             if (error) {
-                console.log(error);
                 res.status(400).send({error : error});
             }
             body = JSON.parse(body);
@@ -96,7 +96,6 @@ exports.analyze = async (req, res) => {
             });
         });
     } catch (error) {
-        console.log(error);
         res.status(400).send({
             data: null,
             error : error,
