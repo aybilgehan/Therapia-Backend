@@ -32,7 +32,7 @@ exports.checkTextLength = async (req, res, next) => {
             res.status(400).send({ error: "Text length must be greater than 100 and less than 1000 characters" });
         }
     } catch (error) {
-        res.status(400).send({error : "An error occured"});
+        res.status(400).send({error : error});
     }
 }
 

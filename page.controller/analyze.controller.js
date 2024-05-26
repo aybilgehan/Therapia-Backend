@@ -78,7 +78,7 @@ exports.analyze = async (req, res) => {
         }, async (error, response, body) => {
             if (error) {
                 console.log(error);
-                res.status(400).send({error : "An error occured"});
+                res.status(400).send({error : error});
             }
             body = JSON.parse(body);
             let tempId = uuid.v4();
@@ -99,7 +99,7 @@ exports.analyze = async (req, res) => {
         console.log(error);
         res.status(400).send({
             data: null,
-            error : "An error occured",
+            error : error,
             success: false
         });
     }
