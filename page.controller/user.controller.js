@@ -251,19 +251,21 @@ exports.updateEvaluationPermission = async (req, res) => {
  */
 exports.applyProfessional = async (req, res) => {
     try {
+        console.log("geldi")
         if (await Application.findOne({ userId: req.session.userId })) {
             res.status(400).send({ data: null, message: "Application already sent", success: false });
             return;
         }
 
         const files = req.files;
+        //const photo = req.photo;
 
         if (!files) {
             res.status(400).send({ data: null, message: "No files uploaded", success: false });
             return;
         }
-
         var filePaths = [];
+        var photoPath;
         const uploadFile = async (file) => {
             return new Promise((resolve, reject) => {
                 const upload_params = {
@@ -278,10 +280,15 @@ exports.applyProfessional = async (req, res) => {
                     if (err) {
                         console.log(err);
                         reject(err);
+                    } else {
+                        if (file.fieldname == "file") {
+                            filePaths.push(data.Location);
+                        } else if (file.fieldname == "photo") {
+                            photoPath = data.Location;
+                        }
+                        fs.unlinkSync(file.path);
+                        resolve();
                     }
-                    filePaths.push(data.Location);
-                    fs.unlinkSync(file.path);
-                    resolve();
                 });
             });
         };
@@ -290,10 +297,13 @@ exports.applyProfessional = async (req, res) => {
             await uploadFile(file);
         }
 
+
+
         await Application.create({
             userId: req.session.userId,
             information: JSON(req.body.information),
             document: filePaths,
+            photo: photoPath
         });
 
         res.status(200).send({ data: null, message: "Application sent", success: true });

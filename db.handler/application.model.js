@@ -12,6 +12,10 @@ const applicationSchema = new Schema({
         type: Object
     },
 
+    photo: {
+        type: String
+    },
+
     document: {
         type: Array,
         default: []

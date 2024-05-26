@@ -316,6 +316,7 @@ exports.signin = async (req, res) => {
                 });
             res.status(200).send({
                 data: {
+                    id: user._id,
                     user: user.information ? user.information : user.email,
                     role: user.role,
                     token: token

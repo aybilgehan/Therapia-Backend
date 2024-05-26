@@ -10,7 +10,7 @@ const upload = multer({
     limits: { fileSize: 1024 * 1024 * 1},
     fileFilter: (req, file, cb) => {
         // Yalnızca belirli dosya türlerine izin ver
-        const allowedFileTypes = ['.pdf'];
+        const allowedFileTypes = ['.pdf', '.png', '.jpg', '.jpeg'];
         const extname = path.extname(file.originalname).toLowerCase();
         if (allowedFileTypes.includes(extname)) {
             return cb(null, true);
@@ -27,6 +27,8 @@ router.put("/api/result/permission/:id", mw.verifyJWT, mw.checkUserLoggedIn, mw.
 
 // Application for the user role and upload multiple files
 router.post("/api/apply", mw.verifyJWT, mw.checkUserLoggedIn, upload.array('file', 5), userController.applyProfessional);
+
+router.post("/api/test",  upload.fields( [  { name: 'file', maxCount: 5}, {name: 'photo', maxCount: 1}]), userController.applyProfessional);
 
 
 
