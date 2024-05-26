@@ -76,6 +76,10 @@ exports.getArticles = async (req, res, next) => {
 
     try {
         results = await Articles.find().sort({ createdAt: -1 }).limit(limit).skip(startIndex).exec();
+        results = results.map(result => {
+            let user = Users.findById(result.writerId);
+            result.writerName = user.information.name + " " + user.information.surname;
+        });
         res.status(200).send({
             data: results,
             message: "Results fetched successfully",

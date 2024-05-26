@@ -77,7 +77,11 @@ exports.analyze = async (req, res) => {
             })
         }, async (error, response, body) => {
             if (error) {
-                res.status(400).send({error : error});
+                res.status(400).send({
+                    data: null,
+                    message : error,
+                    success: false
+                });
             }
             body = JSON.parse(body);
             let tempId = uuid.v4();
@@ -97,7 +101,7 @@ exports.analyze = async (req, res) => {
     } catch (error) {
         res.status(400).send({
             data: null,
-            error : error,
+            message : error,
             success: false
         });
     }
