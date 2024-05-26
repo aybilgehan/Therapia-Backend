@@ -41,6 +41,10 @@ const swaggerOptions = {
         url: 'http://localhost',
         description: 'Local server',
       },
+      {
+        url: 'https://therapia.onrender.com',
+        description: 'Production server',
+      }
     ],
     components: {
       securitySchemes: {
