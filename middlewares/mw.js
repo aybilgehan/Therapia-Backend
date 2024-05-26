@@ -49,6 +49,7 @@ exports.checkIsUser = async (req, res, next) => {
 
 exports.verifyJWT = async (req, res, next) => {
     try {
+        console.log(req.headers.authorization)
         const token = req.header('Authorization');
         if (!token) {
             res.status(401).send({ message: "Unauthorized" });
