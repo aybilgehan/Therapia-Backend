@@ -29,10 +29,10 @@ exports.checkTextLength = async (req, res, next) => {
         if (req.body.text.length > 100 && req.body.text.length < 1000) {
             next();
         } else {
-            res.send({ error: "Text length must be greater than 100 and less than 1000 characters" });
+            res.status(400).send({ error: "Text length must be greater than 100 and less than 1000 characters" });
         }
     } catch (error) {
-        res.send({error : "An error occured"});
+        res.status(400).send({error : "An error occured"});
     }
 }
 
@@ -48,7 +48,7 @@ exports.verifyJWT = async (req, res, next) => {
         req.session.role = verified.role;
         next();
     } catch (error) {
-        res.status(401).send({ message: "Unauthorized" });
+        res.status(401).send({ message: error });
         return;
     }
 }   

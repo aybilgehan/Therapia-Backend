@@ -78,7 +78,7 @@ exports.analyze = async (req, res) => {
         }, async (error, response, body) => {
             if (error) {
                 console.log(error);
-                res.send({error : "An error occured"});
+                res.status(400).send({error : "An error occured"});
             }
             body = JSON.parse(body);
             let tempId = uuid.v4();
@@ -89,7 +89,7 @@ exports.analyze = async (req, res) => {
                 result: body.result
             });
             body.resultId = tempId;
-            res.send({
+            res.status(200).send({
                 data: body,
                 message: "Text analyzed",
                 success: true
@@ -97,7 +97,7 @@ exports.analyze = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.send({
+        res.status(400).send({
             data: null,
             error : "An error occured",
             success: false
