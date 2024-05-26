@@ -200,14 +200,14 @@ exports.updateEvaluationPermission = async (req, res) => {
  *               information:
  *                 type: string
  *                 description: Information related to the application
- *               files:
+ *               file:
  *                 type: array
  *                 items:
  *                   type: string
  *                   format: binary
  *             required:
  *               - information
- *               - files
+ *               - file
  *     responses:
  *       200:
  *         description: Application sent successfully
