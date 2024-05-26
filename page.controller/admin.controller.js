@@ -1,5 +1,7 @@
 const Application = require('../db.handler/application.model');
 const User = require('../db.handler/user.model');
+const transporter = require('../services/mail.service');
+
 
 /**
  * @swagger
@@ -130,6 +132,25 @@ exports.getApplicants = async (req, res) => {
     }
 }
 
+exports.getApplicant = async (req, res) => {
+    try {
+        let applicant = await Application.findOne({ userId: req.params.id });
+        res.status(200).send({
+            data: applicant,
+            message: "Applicant fetched successfully",
+            success: true
+        });
+        return;
+    } catch (error) {
+        res.status(400).send({ 
+            data: null,
+            message: error,
+            success: false 
+        });
+        return;
+    }
+}
+
 exports.approveApplicant = async (req, res) => {
     try {
         await Application.findOneAndUpdate(
@@ -143,6 +164,14 @@ exports.approveApplicant = async (req, res) => {
             { role: "mhp" },
             { new: true }
         );
+
+        let user = await User.findOne({ _id: req.params.id });
+        await transporter.sendMail({
+            from: process.env.EMAIL,
+            to: user.email,
+            subject: "Application Approved",
+            text: "Your application has been approved. You are now a mental health professional."
+        });
 
         res.status(200).send({ 
             data: null,

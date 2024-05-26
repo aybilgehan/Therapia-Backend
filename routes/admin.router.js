@@ -6,8 +6,9 @@ const mw = require("../middlewares/mw.js");
 
 
 /* - ADMIN ISLEMLERI - */
-router.get("/api/applicants", adminController.getApplicants); // mw eklenecek
+router.get("/api/applicants", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsMHP, adminController.getApplicants); // mw eklenecek
+router.get("/api/applicants/:id", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsMHP, adminController.getApplicant); // mw eklenecek
 
-router.post("/api/approveApplicant/:id", adminController.approveApplicant); // mw eklenecek
+router.post("/api/approveApplicant/:id",mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsMHP, adminController.approveApplicant); // mw eklenecek
 
 module.exports = router;  
