@@ -3,7 +3,7 @@ const User = require('../db.handler/user.model');
 
 /**
  * @swagger
- * admin/api/applicants:
+ * /admin/api/applicants:
  *   get:
  *     summary: Get applicants
  *     tags: [Admin]
@@ -20,7 +20,18 @@ const User = require('../db.handler/user.model');
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/Application'
+ *                     type: object
+ *                     properties:
+ *                       userId:
+ *                         type: string
+ *                       information:
+ *                         type: object
+ *                       document:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                       approved:
+ *                         type: boolean
  *                 message:
  *                   type: string
  *                 success:
@@ -98,7 +109,6 @@ const User = require('../db.handler/user.model');
  *       properties:
  *         _id:
  *           type: string
- *         // add other properties here
  */
 
 exports.getApplicants = async (req, res) => {
