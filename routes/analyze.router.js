@@ -6,7 +6,7 @@ const analyzeController = require("../page.controller/analyze.controller.js");
 
 
 /* - AUTH ISLEMLERI - */
-router.post("/api/analyze", analyzeMW.checkTextLength, analyzeMW.verifyJWT, analyzeMW.checkAnalyzeCount, analyzeController.analyze ); 
+router.post("/api/analyze", analyzeMW.checkTextLength, analyzeMW.verifyJWT, analyzeController.analyze ); 
 
 
 
