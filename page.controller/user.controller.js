@@ -10,8 +10,54 @@ const s3 = new AWS.S3({
     secretAccessKey: process.env.AWS_SECRET_KEY
 });
 
-
-
+/**
+ * @swagger
+ * user/api/information:
+ *   put:
+ *     summary: Update user information
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               information:
+ *                 type: object
+ *                 description: User information to update
+ *             required:
+ *               - information
+ *     responses:
+ *       200:
+ *         description: Information updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ *       500:
+ *         description: An error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: null
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ */
 exports.updateInformation = async (req, res) => {
     try {
         await User.findOneAndUpdate(
@@ -29,21 +75,98 @@ exports.updateInformation = async (req, res) => {
         console.log(error);
         res.status(500).send({
             data: null,
-            message: "An error occured",
+            message: "An error occurred",
             success: false
         });
     }
 }
 
+/**
+ * @swagger
+ * user/api/results:
+ *   get:
+ *     summary: Get analysis results
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Results fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ *       500:
+ *         description: An error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ */
 exports.getResults = async (req, res) => {
     try {
         let results = await Analyze.findOne({ ownerId: req.session.userId });
         res.status(200).send({ data: results, message: "Results fetched successfully", success: true });
     } catch (error) {
-        res.status(500).send({ message: error, message: "An error occured", success: false });
+        res.status(500).send({ message: error, message: "An error occurred", success: false });
     }
 }
 
+/**
+ * @swagger
+ * user/api/result/permission/{id}:
+ *   put:
+ *     summary: Update evaluation permission
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [User]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the evaluation to update
+ *     responses:
+ *       200:
+ *         description: Evaluation permission granted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: null
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ *       400:
+ *         description: An error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: null
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ */
 exports.updateEvaluationPermission = async (req, res) => {
     try {
         // check evaluationPermission is not already true
@@ -55,10 +178,77 @@ exports.updateEvaluationPermission = async (req, res) => {
         res.status(200).send({ data: null, message: "Evaluation permission granted", success: true });
     } catch (error) {
         console.log(error);
-        res.status(400).send({ data: null, message: "An error occured", success: false });
+        res.status(400).send({ data: null, message: "An error occurred", success: false });
     }
 }
 
+/**
+ * @swagger
+ * user/api/apply:
+ *   post:
+ *     summary: Apply for professional status
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               information:
+ *                 type: string
+ *                 description: Information related to the application
+ *               files:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *             required:
+ *               - information
+ *               - files
+ *     responses:
+ *       200:
+ *         description: Application sent successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: null
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ *       400:
+ *         description: An error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: null
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ *       500:
+ *         description: An error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: null
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ */
 exports.applyProfessional = async (req, res) => {
     try {
         if (await Application.findOne({ userId: req.session.userId })) {
@@ -110,6 +300,6 @@ exports.applyProfessional = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send({ data: null, message: "An error occured", success: false });
+        res.status(500).send({ data: null, message: "An error occurred", success: false });
     }
 }

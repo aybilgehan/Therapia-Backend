@@ -5,6 +5,8 @@ const cors = require('cors');
 require('dotenv').config();
 const createError = require('http-errors');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
 
 // Import routes
@@ -25,6 +27,36 @@ else if (process.env['NODE_ENV'] == "production") {
 }
 console.log("URL is >>> " + app.locals.appUrl);
 
+// Swagger
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'User API',
+      version: '1.0.0',
+      description: 'API endpoints for managing user data and actions',
+    },
+    servers: [
+      {
+        url: 'http://localhost',
+        description: 'Local server',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+  },
+  apis: ['./page.controller/*.js'], // Swagger dokümantasyonunu bu dosyalardan oluşturacak
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Middlewares
 //app.use(express.static(__dirname + '/views/'));

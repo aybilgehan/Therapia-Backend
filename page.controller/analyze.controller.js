@@ -3,6 +3,66 @@ require('dotenv').config();
 const Request = require('request');
 const uuid = require('uuid');
 
+/**
+ * @swagger
+ * analyze/api/analyze:
+ *   post:
+ *     summary: Analyze text
+ *     tags: [Analyze]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Text analyzed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     result:
+ *                       type: object
+ *                       properties:
+ *                        label:
+ *                         type: integer
+ *                        sentiment:
+ *                         type: string
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ *       400:
+ *         description: An error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: null
+ *                 error:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Analyze
+ *   description: Text analysis operations
+ */
 
 exports.analyze = async (req, res) => {
     try {
