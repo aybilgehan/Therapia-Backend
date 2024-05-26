@@ -29,7 +29,7 @@ exports.checkTextLength = async (req, res, next) => {
         if (req.body.text.length > 100 && req.body.text.length < 1000) {
             next();
         } else {
-            res.status(400).send({ error: "Text length must be greater than 100 and less than 1000 characters" });
+            res.status(400).send({ error: "Text length must be between 100 - 1000 characters" });
         }
     } catch (error) {
         res.status(400).send({ error: error });
