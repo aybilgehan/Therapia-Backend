@@ -124,6 +124,14 @@ exports.getResults = async (req, res) => {
     }
 }
 
+exports.getResult = async (req, res) => {
+    try {
+        let result = await Analyze.findOne({ _id: req.params['id'] });
+        res.status(200).send({ data: result, message: "Result fetched successfully", success: true });
+    } catch (error) {
+        res.status(500).send({ message: error, message: "An error occurred", success: false });
+    }
+}
 /**
  * @swagger
  * user/api/result/permission/{id}:
@@ -205,9 +213,12 @@ exports.updateEvaluationPermission = async (req, res) => {
  *                 items:
  *                   type: string
  *                   format: binary
+ *               photo:
+ *                  type: file
  *             required:
  *               - information
  *               - file
+ *               - photo
  *     responses:
  *       200:
  *         description: Application sent successfully
