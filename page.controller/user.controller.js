@@ -128,6 +128,7 @@ exports.getResults = async (req, res) => {
                 evaluation: result.evaluation
             }
         });
+        results = results.sort((a, b) => b.date - a.date);
         res.status(200).send({ data: results, message: "Results fetched successfully", success: true });
     } catch (error) {
         res.status(500).send({ message: error, message: "An error occurred", success: false });
