@@ -231,6 +231,10 @@ exports.getResult = async (req, res) => {
  */
 exports.updateEvaluationPermission = async (req, res) => {
     try {
+        if ( await Analyze.exists({ _id: req.params['id'], evaluationPermission: true } != null)){ 
+            res.status(400).send({ data: null, message: "Evaluation permission already granted", success: false });
+            return;
+        }        
         // check evaluationPermission is not already true
         await Analyze.findOneAndUpdate(
             { _id: req.params['id'], evaluationPermission: false },

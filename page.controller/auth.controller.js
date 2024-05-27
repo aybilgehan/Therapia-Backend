@@ -2,8 +2,10 @@ require('dotenv').config();
 const Users = require('../db.handler/user.model');
 const transporter = require('../services/mail.service');
 const uuid = require('uuid');
+const Application = require('../db.handler/application.model');
 
 var jwt = require('jsonwebtoken');
+const { application } = require('express');
 
 var temp_users = [];
 
@@ -314,6 +316,9 @@ exports.signin = async (req, res) => {
                     allowInsecureKeySizes: true,
                     expiresIn: 86400,
                 });
+
+                console.log(await Application.exists({ userId: user._id }))
+
             res.status(200).send({
                 data: {
                     id: user._id,
@@ -322,6 +327,7 @@ exports.signin = async (req, res) => {
                         information: user.information
                     },
                     role: user.role,
+                    isApplied: user.role == "user" ? await Application.exists({ userId: user._id }) != null ? true : false : null,
                     token: token
                 },
                 message: "User logged in",
@@ -330,9 +336,10 @@ exports.signin = async (req, res) => {
             return;
         }
     } catch (error) {
+        console.log(error)
         res.status(500).send({ 
             data: null, 
-            message: "An error occurred",
+            message: error,
             success: false 
         });
         return;
