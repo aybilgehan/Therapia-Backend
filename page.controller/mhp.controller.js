@@ -86,7 +86,8 @@ exports.getEvaluationResults = async (req, res) => {
                 text: result.text,
                 ownerId: result.ownerId,
                 date: result.date,
-                result: result.result
+                result: result.result,
+                evaluation: null
             };
         });
         res.status(200).send({
@@ -175,7 +176,8 @@ exports.getEvaluationResult = async (req, res) => {
                 text: result.text,
                 ownerId: result.ownerId,
                 date: result.date,
-                result: result.result
+                result: result.result,
+                evaluation: null
             },
             message: "Result fetched successfully",
             success: true
