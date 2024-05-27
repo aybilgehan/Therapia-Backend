@@ -118,7 +118,7 @@ exports.getApplicants = async (req, res) => {
         let applicants = await Application.find({});
         applicants = applicants.map(applicant => {
             return {
-                _id: applicant._id,
+                applicationId: applicant._id,
                 userId: applicant.userId,
                 information: applicant.information,
                 document: applicant.document,
@@ -147,7 +147,7 @@ exports.getApplicant = async (req, res) => {
         let applicant = await Application.findOne({ userId: req.params.id });
         res.status(200).send({
             data: {
-                _id: applicant._id,
+                applicationId: applicant._id,
                 userId: applicant.userId,
                 information: applicant.information,
                 document: applicant.document,
