@@ -230,17 +230,20 @@ exports.getResult = async (req, res) => {
  *                   type: boolean
  */
 exports.updateEvaluationPermission = async (req, res) => {
-    try {
-        if ( await Analyze.exists({ _id: req.params['id'], evaluationPermission: true } != null)){ 
+    try {      
+        let record = await Analyze.findOne({ _id: req.params['id'], evaluationPermission: true});
+        if (record) {
             res.status(400).send({ data: null, message: "Evaluation permission already granted", success: false });
             return;
-        }        
-        // check evaluationPermission is not already true
+        }
+        // check evaluationPermission is not already true and update it if can not find any record return error
         await Analyze.findOneAndUpdate(
             { _id: req.params['id'], evaluationPermission: false },
             { evaluationPermission: true },
             { new: true }
         );
+
+        
         res.status(200).send({ data: null, message: "Evaluation permission granted", success: true });
     } catch (error) {
         console.log(error);
