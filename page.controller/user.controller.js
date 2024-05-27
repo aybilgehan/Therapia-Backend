@@ -124,6 +124,40 @@ exports.getResults = async (req, res) => {
     }
 }
 
+/**
+ * @swagger
+ * user/api/result/{id}:
+ *   get:
+ *     summary: Get analysis results
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Results fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ *       500:
+ *         description: An error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ */
 exports.getResult = async (req, res) => {
     try {
         let result = await Analyze.findOne({ _id: req.params['id'] });

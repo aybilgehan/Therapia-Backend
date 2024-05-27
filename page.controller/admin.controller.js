@@ -1,7 +1,7 @@
 const Application = require('../db.handler/application.model');
 const User = require('../db.handler/user.model');
 const transporter = require('../services/mail.service');
-
+const mongoose = require('mongoose');
 
 /**
  * @swagger
@@ -153,19 +153,20 @@ exports.getApplicant = async (req, res) => {
 
 exports.approveApplicant = async (req, res) => {
     try {
+
         let application = await Application.findOneAndUpdate(
             { _id: req.params.id },
             { approved: req.body.approved },
             { new: true }
         );
 
-        await User.findOneAndUpdate(
+        let user = await User.findOneAndUpdate(
             { _id: application.userId },
             { role: "mhp" },
             { new: true }
         );
 
-        let user = await User.findOne({ _id: req.params.id });
+        
         await transporter.sendMail({
             from: process.env.EMAIL,
             to: user.email,

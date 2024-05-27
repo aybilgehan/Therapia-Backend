@@ -11,4 +11,5 @@ router.get("/api/applicants/:id", mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIs
 
 router.post("/api/approveApplicant/:id",mw.verifyJWT, mw.checkUserLoggedIn, mw.checkIsAdmin, adminController.approveApplicant); // mw eklenecek
 
+router.post("/api/deneme/:id",adminController.approveApplicant); // mw eklenecek
 module.exports = router;  

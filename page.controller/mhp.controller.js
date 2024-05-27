@@ -95,6 +95,86 @@ exports.getEvaluationResults = async (req, res) => {
     }
 }
 
+/**
+ * @swagger
+ * mhp/api/results/evaluation/{id}:
+ *   get:
+ *     summary: Get evaluation results
+ *     tags: 
+ *       - MHP
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       text:
+ *                         type: string
+ *                       ownerId:
+ *                         type: string
+ *                       date:
+ *                         type: string
+ *                         format: date-time
+ *                       result:
+ *                         type: number
+ *                       evaluationPermission:
+ *                         type: boolean
+ *                       evaluation:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             mhpId:
+ *                               type: string
+ *                             evaluation:
+ *                               type: number
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ *       400:
+ *         description: An error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: null
+ *                 message:
+ *                   type: string
+ *                 success:
+ *                   type: boolean
+ */
+exports.getEvaluationResult = async (req, res) => {
+    try {
+        let result = await Analyze.findOne({ _id: req.params.id});
+        res.status(200).send({
+            data: result,
+            message: "Result fetched successfully",
+            success: true
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            data: null,
+            message: "An error occurred",
+            success: false
+        });
+    }
+}
+
 
 /**
  * @swagger
