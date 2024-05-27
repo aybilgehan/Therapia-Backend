@@ -240,7 +240,11 @@ exports.getEvaluationResult = async (req, res) => {
  */
 exports.evaluateResult = async (req, res) => {
     try {
-        await Analyze.findOneAndUpdate({ resultId: req.body.resultID }, { $push: { evaluation: { mhpId: req.session.userId, evaluation: req.body.evaluation } } });
+        await Analyze.findOneAndUpdate(
+            { resultId: req.body.resultID }, 
+            { evaluation: { mhpId: req.session.userId, evaluation: req.body.evaluation } },
+            { new: true }
+        );
         res.status(200).send({ data: null, message: "Result evaluated", success: true });
     } catch (error) {
         console.log(error);

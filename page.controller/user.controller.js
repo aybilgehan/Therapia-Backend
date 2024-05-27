@@ -62,12 +62,12 @@ exports.updateInformation = async (req, res) => {
     try {
         await User.findOneAndUpdate(
             { userId: req.session.userId },
-            { information: JSON(req.body) },
+            { information: req.body },
             { new: true }
         );
 
         res.status(200).send({
-            data: JSON(req.body),
+            data: req.body,
             message: "Information updated",
             success: true
         });

@@ -31,8 +31,7 @@ const analyzeSchema = new Schema({
     },
 
     evaluation: {
-        type: Array,
-        default: []
+        type: Object
     }
 });
 
