@@ -154,7 +154,7 @@ exports.getApplicant = async (req, res) => {
 exports.approveApplicant = async (req, res) => {
     try {
         let application = await Application.findOneAndUpdate(
-            { userId: req.params.id },
+            { _id: req.params.id },
             { approved: req.body.approved },
             { new: true }
         );
