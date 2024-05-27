@@ -171,6 +171,15 @@ exports.getApplicant = async (req, res) => {
 exports.approveApplicant = async (req, res) => {
     try {
 
+        if (await Application.findOne({ _id: req.params.id }).approved != null) {
+            res.status(400).send({ 
+                data: null,
+                message: "Applicant already approved",
+                success: false 
+            });
+            return;
+        }
+
         let application = await Application.findOneAndUpdate(
             { _id: req.params.id },
             { approved: req.body.approved },
