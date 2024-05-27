@@ -3,9 +3,7 @@ const Users = require('../db.handler/user.model');
 const transporter = require('../services/mail.service');
 const uuid = require('uuid');
 const Application = require('../db.handler/application.model');
-
 var jwt = require('jsonwebtoken');
-const { application } = require('express');
 
 var temp_users = [];
 
@@ -14,60 +12,7 @@ setInterval(() => {
     temp_users = temp_users.filter(u => u.date > Date.now() - 5 * 60 * 1000);
 }, 1000 * 60 * 3);
 
-/**
- * @swagger
- * api/auth/verify/{code}:
- *   get:
- *     summary: Verify user account
- *     tags: [Auth]
- *     parameters:
- *       - in: path
- *         name: code
- *         schema:
- *           type: string
- *         required: true
- *         description: Verification code
- *     responses:
- *       200:
- *         description: User created
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: null
- *                 message:
- *                   type: string
- *                 success:
- *                   type: boolean
- *       400:
- *         description: Invalid Verification
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: null
- *                 message:
- *                   type: string
- *                 success:
- *                   type: boolean
- *       500:
- *         description: An error occurred
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: null
- *                 message:
- *                   type: string
- *                 success:
- *                   type: boolean
- */
+
 exports.verify = async (req, res) => {
     try {
         let user = temp_users.find(u => u.code === req.params["code"] && u.date > Date.now() - 5 * 60 * 1000);
@@ -81,7 +26,7 @@ exports.verify = async (req, res) => {
                 email: user.email,
                 password: user.password
             });
-            res.status(200).send({ 
+            res.status(200).send({
                 data: null,
                 message: "User created",
                 success: true
@@ -97,10 +42,10 @@ exports.verify = async (req, res) => {
         }
     } catch (error) {
         console.log(error)
-        res.status(500).send({ 
+        res.status(500).send({
             data: null,
             message: "An error occurred",
-            success: false    
+            success: false
         });
         return;
     }
@@ -172,7 +117,7 @@ exports.signup = async (req, res) => {
         let checkEmail = await Users.findOne({ "email": req.body.email });
 
         if (temp_users.find(u => u.email === req.body.email)) {
-            res.status(400).send({ 
+            res.status(400).send({
                 data: null,
                 message: "Verification email already sent",
                 success: true
@@ -181,7 +126,7 @@ exports.signup = async (req, res) => {
         }
 
         if (checkEmail) {
-            res.status(400).send({ 
+            res.status(400).send({
                 data: null,
                 message: "Email already exists",
                 success: false
@@ -193,7 +138,77 @@ exports.signup = async (req, res) => {
                 from: process.env.EMAIL,
                 to: req.body.email,
                 subject: "Therapia Account Verification",
-                text: `Please click the link to verify your account: ${process.env.APP_URL}/api/auth/verify/${code}`
+                html: `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Therapia Account Verification</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                background-color: #f4f4f4;
+                                margin: 0;
+                                padding: 0;
+                            }
+                            .container {
+                                background-color: #ffffff;
+                                margin: 50px auto;
+                                padding: 20px;
+                                max-width: 600px;
+                                border-radius: 8px;
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            }
+                            .header {
+                                text-align: center;
+                                padding: 10px 0;
+                            }
+                            .header h1 {
+                                color: #333;
+                            }
+                            .content {
+                                text-align: center;
+                                padding: 20px;
+                            }
+                            .content p {
+                                font-size: 16px;
+                                color: #666;
+                            }
+                            .button {
+                                display: inline-block;
+                                margin-top: 20px;
+                                padding: 10px 20px;
+                                font-size: 16px;
+                                color: #ffffff;
+                                background-color: #28a745;
+                                text-decoration: none;
+                                border-radius: 5px;
+                            }
+                            .footer {
+                                text-align: center;
+                                padding: 10px 0;
+                                font-size: 12px;
+                                color: #aaa;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <div class="header">
+                                <h1>Welcome to Therapia!</h1>
+                            </div>
+                            <div class="content">
+                                <p>Thank you for signing up with Therapia. Please click the button below to verify your email address:</p>
+                                <a href="${process.env.APP_URL}/api/auth/verify/${code}" class="button">Verify Your Account</a>
+                            </div>
+                            <div class="footer">
+                                <p>If you did not sign up for this account, you can ignore this email.</p>
+                                <p>&copy; 2024 Therapia. All rights reserved.</p>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `
             }, (error, info) => {
                 if (error) {
                     console.log(error)
@@ -302,7 +317,7 @@ exports.signin = async (req, res) => {
         let user = await Users.findOne({ "email": req.body.email });
         if (!user) { res.status(401).send({ data: null, message: "User not found", success: false }); return; }
         if (user.password != req.body.password) {
-            res.status(401).send({data: null, message: "Invalid username or password", success: false});
+            res.status(401).send({ data: null, message: "Invalid username or password", success: false });
             return;
         } else {
             const token = await jwt.sign(
@@ -317,7 +332,7 @@ exports.signin = async (req, res) => {
                     expiresIn: 86400,
                 });
 
-                console.log(await Application.exists({ userId: user._id }))
+            console.log(await Application.exists({ userId: user._id }))
 
             res.status(200).send({
                 data: {
@@ -337,10 +352,10 @@ exports.signin = async (req, res) => {
         }
     } catch (error) {
         console.log(error)
-        res.status(500).send({ 
-            data: null, 
+        res.status(500).send({
+            data: null,
             message: error,
-            success: false 
+            success: false
         });
         return;
     }
@@ -383,19 +398,19 @@ exports.signin = async (req, res) => {
 exports.logout = async (req, res) => {
     try {
         // make token invalid
-    
+
         req.session = null;
-        res.status(200).send({ 
+        res.status(200).send({
             data: null,
             message: "Logged out",
             success: true
         });
         return;
     } catch (error) {
-        res.status(500).send({ 
+        res.status(500).send({
             data: null,
             message: "An error occurred",
-            success: false    
+            success: false
         });
         return;
     }
