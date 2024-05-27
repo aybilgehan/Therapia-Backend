@@ -308,11 +308,11 @@ exports.applyProfessional = async (req, res) => {
             await uploadFile(file);
         } */
 
-
+        console.log(typeof req.body.information);
 
         await Application.create({
             userId: req.session.userId,
-            information: JSON.parse(req.body.information),
+            information: req.body.information,
             document: filePaths || null,
             photo: photoPath || null
         });
