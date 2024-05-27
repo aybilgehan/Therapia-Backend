@@ -312,7 +312,7 @@ exports.applyProfessional = async (req, res) => {
 
         await Application.create({
             userId: req.session.userId,
-            information: JSON(req.body.information),
+            information: JSON.parse(req.body.information),
             document: filePaths || null,
             photo: photoPath || null
         });
