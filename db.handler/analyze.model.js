@@ -14,6 +14,9 @@ const analyzeSchema = new Schema({
     ownerId: {
         type: Schema.Types.UUID,
     },
+    email: {
+        type: String
+    },
 
     date: {
         type: Date,

@@ -89,6 +89,7 @@ exports.analyze = async (req, res) => {
                 _id: tempId,
                 text: req.body.text,
                 ownerId: req.session.userId ? req.session.userId : null,
+                email: req.session.email ? req.session.email : null,
                 result: body.result
             });
             body.resultId = tempId;

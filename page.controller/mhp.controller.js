@@ -243,7 +243,7 @@ exports.getEvaluationResult = async (req, res) => {
 exports.evaluateResult = async (req, res) => {
     try {
         await Analyze.findOneAndUpdate(
-            { _id: req.body.resultID }, 
+            { _id: req.body.recordId }, 
             { evaluation: { mhpId: req.session.userId, result: req.body.evaluation } },
             { new: true }
         );
