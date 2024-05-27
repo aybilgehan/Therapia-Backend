@@ -82,7 +82,7 @@ exports.getEvaluationResults = async (req, res) => {
         let results = await Analyze.find({ evaluationPermission: true, evaluation: { $not: { $elemMatch: { mhpId: req.session.userId } } } });
         results = results.map(result => {
             return {
-                _id: result._id,
+                recordId: result._id,
                 text: result.text,
                 ownerId: result.ownerId,
                 date: result.date,
@@ -171,7 +171,7 @@ exports.getEvaluationResult = async (req, res) => {
         let result = await Analyze.findOne({ _id: req.params.id});
         res.status(200).send({
             data: {
-                _id: result._id,
+                recordId: result._id,
                 text: result.text,
                 ownerId: result.ownerId,
                 date: result.date,

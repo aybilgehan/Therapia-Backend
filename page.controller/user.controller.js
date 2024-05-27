@@ -120,7 +120,7 @@ exports.getResults = async (req, res) => {
         let results = await Analyze.find({ ownerId: req.session.userId }) || [];
         results = results.map(result => {
             return {
-                _id: result._id,
+                recordId: result._id,
                 text: result.text,
                 result: result.result,
                 date: result.date,
@@ -171,7 +171,17 @@ exports.getResults = async (req, res) => {
 exports.getResult = async (req, res) => {
     try {
         let result = await Analyze.findOne({ _id: req.params['id'] });
-        res.status(200).send({ data: result, message: "Result fetched successfully", success: true });
+        res.status(200).send({ 
+            data: {
+                recordId: result._id,
+                text: result.text,
+                result: result.result,
+                date: result.date,
+                evaluationPermission: result.evaluationPermission,
+                evaluation: result.evaluation
+            }, 
+            message: "Result fetched successfully", 
+            success: true });
     } catch (error) {
         res.status(500).send({ message: error, message: "An error occurred", success: false });
     }
