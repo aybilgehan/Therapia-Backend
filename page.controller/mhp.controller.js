@@ -79,7 +79,7 @@ const s3 = new AWS.S3({
 
 exports.getEvaluationResults = async (req, res) => {
     try {
-        let results = await Analyze.find({ evaluationPermission: true, evaluation: { $not: { $elemMatch: { mhpId: req.session.userId } } } });
+        let results = await Analyze.find({ evaluationPermission: true, evaluation: { $exists: false }});
         results = results.map(result => {
             return {
                 recordId: result._id,
@@ -241,8 +241,8 @@ exports.getEvaluationResult = async (req, res) => {
 exports.evaluateResult = async (req, res) => {
     try {
         await Analyze.findOneAndUpdate(
-            { resultId: req.body.resultID }, 
-            { evaluation: { mhpId: req.session.userId, evaluation: req.body.evaluation } },
+            { _id: req.body.resultID }, 
+            { evaluation: { mhpId: req.session.userId, result: req.body.evaluation } },
             { new: true }
         );
         res.status(200).send({ data: null, message: "Result evaluated", success: true });
