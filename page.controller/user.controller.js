@@ -271,10 +271,10 @@ exports.applyProfessional = async (req, res) => {
         const files = req.files;
         //const photo = req.photo;
 
-        if (!files) {
+/*         if (!files) {
             res.status(400).send({ data: null, message: "No files uploaded", success: false });
             return;
-        }
+        } */
         var filePaths = [];
         var photoPath;
         const uploadFile = async (file) => {
@@ -304,17 +304,17 @@ exports.applyProfessional = async (req, res) => {
             });
         };
 
-        for (const file of Object.values(files)) {
+/*         for (const file of Object.values(files)) {
             await uploadFile(file);
-        }
+        } */
 
 
 
         await Application.create({
             userId: req.session.userId,
             information: JSON(req.body.information),
-            document: filePaths,
-            photo: photoPath
+            document: filePaths || null,
+            photo: photoPath || null
         });
 
         res.status(200).send({ data: null, message: "Application sent", success: true });
