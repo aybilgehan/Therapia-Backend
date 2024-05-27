@@ -122,7 +122,7 @@ exports.getApplicants = async (req, res) => {
                 userId: applicant.userId,
                 information: applicant.information,
                 document: applicant.document,
-                approved: applicant.approved,
+                approved: applicant.approved || null,
                 photo: applicant.photo
             }
         });
@@ -151,7 +151,7 @@ exports.getApplicant = async (req, res) => {
                 userId: applicant.userId,
                 information: applicant.information,
                 document: applicant.document,
-                approved: applicant.approved,
+                approved: applicant.approved || null,
                 photo: applicant.photo
             },
             message: "Applicant fetched successfully",

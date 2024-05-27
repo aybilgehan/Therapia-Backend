@@ -22,8 +22,7 @@ const applicationSchema = new Schema({
     },
 
     approved: {
-        type: Boolean,
-        default: false
+        type: Boolean
     }
 
 });
