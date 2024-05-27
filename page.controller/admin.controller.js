@@ -116,6 +116,16 @@ const mongoose = require('mongoose');
 exports.getApplicants = async (req, res) => {
     try {
         let applicants = await Application.find({});
+        applicants = applicants.map(applicant => {
+            return {
+                _id: applicant._id,
+                userId: applicant.userId,
+                information: applicant.information,
+                document: applicant.document,
+                approved: applicant.approved,
+                photo: applicant.photo
+            }
+        });
         res.status(200).send({
             data: applicants,
             message: "Applicants fetched successfully",
@@ -136,7 +146,14 @@ exports.getApplicant = async (req, res) => {
     try {
         let applicant = await Application.findOne({ userId: req.params.id });
         res.status(200).send({
-            data: applicant,
+            data: {
+                _id: applicant._id,
+                userId: applicant.userId,
+                information: applicant.information,
+                document: applicant.document,
+                approved: applicant.approved,
+                photo: applicant.photo
+            },
             message: "Applicant fetched successfully",
             success: true
         });

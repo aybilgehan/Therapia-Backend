@@ -80,6 +80,15 @@ const s3 = new AWS.S3({
 exports.getEvaluationResults = async (req, res) => {
     try {
         let results = await Analyze.find({ evaluationPermission: true, evaluation: { $not: { $elemMatch: { mhpId: req.session.userId } } } });
+        results = results.map(result => {
+            return {
+                _id: result._id,
+                text: result.text,
+                ownerId: result.ownerId,
+                date: result.date,
+                result: result.result
+            };
+        });
         res.status(200).send({
             data: results,
             message: "Results fetched successfully",
@@ -161,7 +170,13 @@ exports.getEvaluationResult = async (req, res) => {
     try {
         let result = await Analyze.findOne({ _id: req.params.id});
         res.status(200).send({
-            data: result,
+            data: {
+                _id: result._id,
+                text: result.text,
+                ownerId: result.ownerId,
+                date: result.date,
+                result: result.result
+            },
             message: "Result fetched successfully",
             success: true
         });
