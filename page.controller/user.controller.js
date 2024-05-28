@@ -81,6 +81,15 @@ exports.updateInformation = async (req, res) => {
     }
 }
 
+exports.getInformation = async (req, res) => {
+    try {
+        let user = await User.findOne({ userId: req.session.userId });
+        res.status(200).send({ data: user.information, message: "Information fetched successfully", success: true });
+    } catch (error) {
+        res.status(500).send({ data: null, message: error, success: false });
+    }
+}
+
 /**
  * @swagger
  * user/api/results:
